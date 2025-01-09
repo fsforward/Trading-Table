@@ -113,5 +113,47 @@
             </tr>
         </tbody>
     </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cells = document.querySelectorAll('td');
+    
+            cells.forEach(cell => {
+                cell.style.position = 'relative'; // Ensure the cell is positioned relative for the "Copied!" label
+    
+                cell.addEventListener('click', () => {
+                    if (cell.textContent.trim() === '') return; // Don't copy if the cell is empty
+    
+                    navigator.clipboard.writeText(cell.textContent);
+    
+                    const copiedText = document.createElement('span');
+                    copiedText.textContent = 'Copied!';
+                    copiedText.style.position = 'absolute';
+                    copiedText.style.top = '50%';
+                    copiedText.style.left = '50%';
+                    copiedText.style.transform = 'translate(-50%, -50%)';
+                    copiedText.style.backgroundColor = '#ff99cc';
+                    copiedText.style.color = '#d6006f';
+                    copiedText.style.padding = '5px 10px';
+                    copiedText.style.borderRadius = '8px';
+                    copiedText.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.2)';
+                    copiedText.style.fontSize = '0.9em';
+                    copiedText.style.fontFamily = 'Comic Sans MS, cursive';
+                    copiedText.style.opacity = '0';
+                    copiedText.style.transition = 'opacity 0.5s ease-in-out';
+    
+                    cell.appendChild(copiedText);
+    
+                    setTimeout(() => {
+                        copiedText.style.opacity = '1';
+                    }, 0);
+    
+                    setTimeout(() => {
+                        copiedText.style.opacity = '0';
+                        setTimeout(() => copiedText.remove(), 500);
+                    }, 1000);
+                });
+            });
+        });
+    </script>    
 </body>
 </html>
