@@ -11,7 +11,7 @@ body {
 
 table {
     border-collapse: collapse;
-    width: 80%;
+    width: 100%; /* Make the table take up full width */
     background-color: rgba(255, 204, 230, 1); /* Semi-transparent pink */
     box-shadow: 0 4px 8px rgba(255, 182, 193, 0.6);
     border-radius: 0px;
@@ -51,4 +51,28 @@ td:hover {
     transform: scale(1.1); /* Pop-out effect */
     background-color: rgba(255, 153, 204, 0); /* Brighter semi-transparent pink */
     cursor: pointer; /* Show pointer to indicate interactivity */
+}
+
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto; /* Horizontal scrolling */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    th, td {
+        padding: 8px; /* Reduce padding on smaller screens */
+        font-size: 0.9em; /* Adjust font size for smaller screens */
+    }
+
+    caption {
+        font-size: 1.2em; /* Adjust caption size */
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        font-size: 0.8em; /* Further reduce font size on very small screens */
+    }
 }
