@@ -1,0 +1,47 @@
+body {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background-color: #ffe6f2;
+    color: #ff66b2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    background-color: #ffcce6;
+    box-shadow: 0 4px 8px rgba(255, 182, 193, 0.6);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #ff99cc;
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #ff99cc;
+    color: white;
+    font-size: 1.2em;
+}
+
+tr:nth-child(even) {
+    background-color: #ffe6f2;
+}
+
+tr:hover {
+    background-color: #ffb3d9;
+}
+
+caption {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff33a6;
+    text-shadow: 1px 1px 2px #ff66b2;
+}
