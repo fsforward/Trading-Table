@@ -344,14 +344,14 @@
 
                     // Format profit and loss for the display (with "+" for positive numbers)
                     const formattedTotalProfit = cumulativeProfit > 0 ? `+${cumulativeProfit.toFixed(2)}` : cumulativeProfit.toFixed(2);
-                    const formattedTotalLoss = totalDayLoss.toFixed(2);  // Correct this part to show total day loss
+                    const formattedTotalLoss = cumulativeLoss < 0 ? `-${Math.abs(cumulativeLoss).toFixed(2)}` : `+${cumulativeLoss.toFixed(2)}`;
                     const formattedTotal = cumulativeTotal > 0 ? `+${cumulativeTotal.toFixed(2)}` : cumulativeTotal.toFixed(2);
 
                     // Update table row
                     cells[0].textContent = tradeNumber++;
                     cells[4].textContent = moneyEnd.toFixed(2);
                     cells[6].textContent = totalDayProfit !== 0 ? `+${totalDayProfit.toFixed(2)}` : '0';
-                    cells[7].textContent = formattedTotalLoss;  // Display the correct total day loss
+                    cells[7].textContent = totalDayLoss !== 0 ? `+${totalDayLoss.toFixed(2)}` : '0';
                     cells[8].textContent = formattedTotalProfit;
                     cells[9].textContent = formattedTotalLoss;
                     cells[10].textContent = formattedTotal;
@@ -381,6 +381,6 @@
             // Trigger table automation
             automateTrades();
         });
-    </script> 
+    </script>
 </body>
 </html>
