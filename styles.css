@@ -10,17 +10,18 @@ body {
 }
 
 :root {
-    --positive-color: #00ff00;
+    --positive-color: #0c9230;
     --negative-color: #ff0000;
 }
 
 .positive {
-    color: var(--positive-color)
-    weight: bold
+    color: var(--positive-color);
+    font-weight: bolder;
 }
 
 .negative {
     color: var(--negative-color);
+    font-weight: bolder;
 }
 
 table {
