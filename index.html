@@ -356,6 +356,15 @@
                     cells[9].textContent = formattedTotalLoss;
                     cells[10].textContent = formattedTotal;
 
+                    cells[10].textContent = formattedTotal;
+
+                    // Add glow effect only for positive profit in the 10th column (Total column)
+                    if (cells[10].textContent.startsWith('+')) {
+                        cells[10].classList.add('positive-glow');
+                    } else {
+                        cells[10].classList.remove('positive-glow');
+                    }
+
                     // Apply CSS classes for color
                     [cells[6], cells[7], cells[8], cells[9], cells[10]].forEach(cell => {
                         if (cell.textContent.startsWith('+')) {

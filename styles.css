@@ -10,7 +10,7 @@ body {
 }
 
 :root {
-    --positive-color: #0c9230;
+    --positive-color: #2c9248;
     --negative-color: #ff0000;
 }
 
@@ -23,6 +23,20 @@ body {
     color: var(--negative-color);
     font-weight: bolder;
 }
+
+.positive-glow {
+    animation: glow-positive 1.5s infinite alternate;
+}
+
+@keyframes glow-positive {
+    0% {
+        text-shadow: 0 0 3px var(--positive-color), 0 0 5px var(--positive-color), 0 0 7px var(--positive-color);
+    }
+    100% {
+        text-shadow: 0 0 0px var(--positive-color), 0 0 0px var(--positive-color), 0 0 0px var(--positive-color);
+    }
+}
+
 
 table {
     border-collapse: collapse;
