@@ -1,9 +1,11 @@
+/* Light Mode */
 body {
     font-family: "Comic Sans MS", cursive, sans-serif;
     background-color: #ffe6f2;
     color: #ff66b2;
     height: 100vh;
     margin: 0;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 :root {
@@ -21,24 +23,36 @@ body {
     font-weight: bolder;
 }
 
+.negative-pulse {
+    animation: pulse-negative 2s infinite alternate;
+}
+
+@keyframes pulse-negative {
+    0% {
+        text-shadow: 0 0 3px var(--negative-color), 0 0 5px var(--negative-color), 0 0 7px var(--negative-color);
+    }
+    100% {
+        text-shadow: 0 0 0px var(--negative-color), 0 0 0px var(--negative-color), 0 0 0px var(--negative-color);
+    }
+}
+
 .positive-glow {
-    animation: glow-positive 1.5s infinite alternate;
+    animation: glow-positive 0.4s infinite alternate;
 }
 
 @keyframes glow-positive {
     0% {
-        text-shadow: 0 0 3px var(--positive-color), 0 0 5px var(--positive-color), 0 0 7px var(--positive-color);
+        transform: scale(1.1);
     }
     100% {
-        text-shadow: 0 0 0px var(--positive-color), 0 0 0px var(--positive-color), 0 0 0px var(--positive-color);
+        transform: scale(1);
     }
 }
 
-
 table {
     border-collapse: collapse;
-    width: 100%; /* Make the table take up full width */
-    background-color: rgba(255, 204, 230, 1); /* Semi-transparent pink */
+    width: 100%;
+    background-color: rgba(255, 204, 230, 1);
     box-shadow: 0 4px 15px rgba(255, 182, 193, 0.8);
     border-radius: 0px;
     overflow: hidden;
@@ -48,7 +62,7 @@ th, td {
     border: 1px solid #ff99cc;
     padding: 12px;
     text-align: center;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth hover and pop effect */
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 th {
@@ -58,11 +72,11 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: rgba(255, 230, 242, 1); /* Light pink transparency */
+    background-color: rgba(255, 230, 242, 1);
 }
 
 tr:hover {
-    background-color: rgba(255, 179, 217, 0.6); /* Slightly brighter pink for the row */
+    background-color: rgba(255, 179, 217, 0.6);
 }
 
 caption {
@@ -71,34 +85,48 @@ caption {
     font-weight: bold;
     color: #ff33a6;
     text-shadow: 1px 1px 2px #ff66b2;
+    cursor: pointer;
 }
 
 td:hover {
-    transform: scale(1.1); /* Pop-out effect */
-    background-color: rgba(255, 153, 204, 0); /* Brighter semi-transparent pink */
-    cursor: pointer; /* Show pointer to indicate interactivity */
+    transform: scale(1.1);
+    background-color: rgba(255, 153, 204, 0);
+    cursor: pointer;
 }
 
-@media (max-width: 768px) {
-    table {
-        width: 100%;
-        display: block;
-        overflow-x: auto; /* Horizontal scrolling */
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    }
-
-    th, td {
-        padding: 8px; /* Reduce padding on smaller screens */
-        font-size: 0.9em; /* Adjust font size for smaller screens */
-    }
-
-    caption {
-        font-size: 1.2em; /* Adjust caption size */
-    }
+/* Dark Mode */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #cfcfcf;
 }
 
-@media (max-width: 480px) {
-    th, td {
-        font-size: 0.8em; /* Further reduce font size on very small screens */
-    }
+body.dark-mode table {
+    background-color: #333333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode th {
+    background-color: #444444;
+    color: #fff;
+}
+
+body.dark-mode tr:nth-child(even) {
+    background-color: #555555;
+}
+
+body.dark-mode tr:hover {
+    background-color: #666666;
+}
+
+body.dark-mode .positive {
+    color: #4caf50;
+}
+
+body.dark-mode .negative {
+    color: #f44336;
+}
+
+body.dark-mode caption {
+    color: #e91e63;
+    text-shadow: 1px 1px 2px #d81b60;
 }

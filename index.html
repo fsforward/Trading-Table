@@ -263,6 +263,10 @@
     </table>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Toggle dark/light mode when caption is clicked
+            document.querySelector("caption").addEventListener("click", function() {
+                document.body.classList.toggle("dark-mode");
+            });
             let cumulativeProfit = 0;
             let cumulativeLoss = 0;
 
@@ -356,13 +360,13 @@
                     cells[9].textContent = formattedTotalLoss;
                     cells[10].textContent = formattedTotal;
 
-                    cells[10].textContent = formattedTotal;
-
                     // Add glow effect only for positive profit in the 10th column (Total column)
                     if (cells[10].textContent.startsWith('+')) {
                         cells[10].classList.add('positive-glow');
+                        cells[10].classList.remove('negative-pulse');
                     } else {
                         cells[10].classList.remove('positive-glow');
+                        cells[10].classList.add('negative-pulse');
                     }
 
                     // Apply CSS classes for color
