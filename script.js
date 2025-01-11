@@ -42,26 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const formattedTotalLoss = cumulativeLoss < 0 ? `-${Math.abs(cumulativeLoss).toFixed(2)}` : `+${cumulativeLoss.toFixed(2)}`;
         const formattedTotal = cumulativeTotal > 0 ? `+${cumulativeTotal.toFixed(2)}` : cumulativeTotal.toFixed(2);
 
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>${tradeNumber++}</td>
-            <td>${date}</td>
-            <td>${stock}</td>
-            <td>${moneyStart.toFixed(2)}</td>
-            <td>${moneyEnd.toFixed(2)}</td>
-            <td>${pl > 0 ? `+${pl.toFixed(2)}` : pl.toFixed(2)}</td>
-            <td>${totalDayProfit !== 0 ? `+${totalDayProfit.toFixed(2)}` : '0'}</td>
-            <td>${totalDayLoss !== 0 ? `${totalDayLoss.toFixed(2)}` : '0'}</td>
-            <td>${formattedTotalProfit}</td>
-            <td>${formattedTotalLoss}</td>
-            <td>${formattedTotal}</td>
-        `;
+        // Update existing cells instead of replacing the row entirely
+        cells[0].textContent = tradeNumber++;
+        cells[1].textContent = date;
+        cells[2].textContent = moneyStart.toFixed(2);
+        cells[3].textContent = moneyEnd.toFixed(2);
+        cells[4].textContent = (pl > 0 ? `+${pl.toFixed(2)}` : pl.toFixed(2));
+        cells[5].textContent = totalDayProfit !== 0 ? `+${totalDayProfit.toFixed(2)}` : '0';
+        cells[6].textContent = totalDayLoss !== 0 ? `${totalDayLoss.toFixed(2)}` : '0';
+        cells[7].textContent = formattedTotalProfit;
+        cells[8].textContent = formattedTotalLoss;
+        cells[9].textContent = formattedTotal;
 
-        row.replaceWith(newRow);  // Replace the old row with the new one
-
-        const newCells = newRow.querySelectorAll('td');
-        const lastCell = newCells[10];
-
+        // Highlight cells based on values
+        const lastCell = cells[9];
         if (lastCell.textContent.startsWith('+')) {
             lastCell.classList.add('positive-glow');
             lastCell.classList.remove('negative-pulse');
@@ -70,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lastCell.classList.add('negative-pulse');
         }
 
-        newCells.forEach(cell => {
+        cells.forEach(cell => {
             if (cell.textContent.startsWith('+')) {
                 cell.classList.add('positive');
                 cell.classList.remove('negative');
@@ -80,12 +74,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Apply specific styling for the profit/loss column
         if (pl > 0) {
-            newCells[5].classList.add('positive');
-            newCells[5].classList.remove('negative');
+            cells[4].classList.add('positive');
+            cells[4].classList.remove('negative');
         } else if (pl < 0) {
-            newCells[5].classList.add('negative');
-            newCells[5].classList.remove('positive');
+            cells[4].classList.add('negative');
+            cells[4].classList.remove('positive');
         }
     });
+});
+
+// Allow text selection in table cells
+document.addEventListener('copy', function(e) {
+    let selectedText = window.getSelection().toString();
+    // Modify or format the selectedText if needed before copying
+    e.clipboardData.setData('text/plain', selectedText);
+    e.preventDefault();
+});
+
+// Enable selection of table cells
+document.querySelectorAll("table, td").forEach(element => {
+    element.style.userSelect = 'text'; // Enable text selection for all table cells
 });
