@@ -2,11 +2,9 @@ body {
     font-family: "Comic Sans MS", cursive, sans-serif;
     background-color: #ffe6f2;
     color: #ff66b2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     margin: 0;
+    padding: 50px;
 }
 
 :root {
