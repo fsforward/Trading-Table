@@ -15,12 +15,12 @@ body {
 
 .positive {
     color: var(--positive-color);
-    font-weight: bolder;
+    font-weight: bold;
 }
 
 .negative {
     color: var(--negative-color);
-    font-weight: bolder;
+    font-weight: bold;
 }
 
 .negative-pulse {
