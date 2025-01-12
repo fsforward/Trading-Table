@@ -16,15 +16,19 @@ body {
 
 .positive {
     color: var(--positive-color);
+}
+
+.positive-glow {
     font-weight: bold;
+    animation: glow-positive 0.8s infinite alternate;
 }
 
 .negative {
     color: var(--negative-color);
-    font-weight: bold;
 }
 
 .negative-pulse {
+    font-weight: bold;
     animation: pulse-negative 2s infinite alternate;
 }
 
@@ -35,10 +39,6 @@ body {
     100% {
         text-shadow: 0 0 0px var(--negative-color), 0 0 0px var(--negative-color), 0 0 0px var(--negative-color);
     }
-}
-
-.positive-glow {
-    animation: glow-positive 0.8s infinite alternate;
 }
 
 @keyframes glow-positive {
