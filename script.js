@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Toggle dark mode on caption click
     document.querySelector("caption").addEventListener("click", function() {
         document.body.classList.toggle("dark-mode");
     });
+
     let cumulativeProfit = 0;
     let cumulativeLoss = 0;
 
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${formattedTotal}</td>
         `;
 
-        row.replaceWith(newRow);  // Replace the old row with the new one
+        row.replaceWith(newRow); // Replace the old row with the new one
 
         const newCells = newRow.querySelectorAll('td');
         const lastCell = newCells[10];
@@ -87,5 +89,44 @@ document.addEventListener('DOMContentLoaded', () => {
             newCells[5].classList.add('negative');
             newCells[5].classList.remove('positive');
         }
+    });
+
+    // Copy cell content on click
+    const cells = document.querySelectorAll('td');
+    cells.forEach(cell => {
+        cell.style.position = 'relative';
+
+        cell.addEventListener('click', () => {
+            if (cell.textContent.trim() === '') return;
+
+            navigator.clipboard.writeText(cell.textContent);
+
+            const copiedText = document.createElement('span');
+            copiedText.textContent = 'Copied!';
+            copiedText.style.position = 'absolute';
+            copiedText.style.top = '50%';
+            copiedText.style.left = '50%';
+            copiedText.style.transform = 'translate(-50%, -50%)';
+            copiedText.style.backgroundColor = '#ff99cc';
+            copiedText.style.color = '#d6006f';
+            copiedText.style.padding = '5px 10px';
+            copiedText.style.borderRadius = '8px';
+            copiedText.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.2)';
+            copiedText.style.fontSize = '0.9em';
+            copiedText.style.fontFamily = 'Comic Sans MS, cursive';
+            copiedText.style.opacity = '0';
+            copiedText.style.transition = 'opacity 0.5s ease-in-out';
+
+            cell.appendChild(copiedText);
+
+            setTimeout(() => {
+                copiedText.style.opacity = '1';
+            }, 0);
+
+            setTimeout(() => {
+                copiedText.style.opacity = '0';
+                setTimeout(() => copiedText.remove(), 500);
+            }, 1000);
+        });
     });
 });
