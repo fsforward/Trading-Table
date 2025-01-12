@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${formattedTotal}</td>
         `;
 
-        row.replaceWith(newRow); // Replace the old row with the new one
+        row.replaceWith(newRow);
 
         const newCells = newRow.querySelectorAll('td');
         const lastCell = newCells[10];
@@ -86,8 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Find the highest value in the Total column (last column)
-    const totalCells = document.querySelectorAll("#tradeBody tr td:nth-child(11)"); // Selecting the "Total" column
+    const totalCells = document.querySelectorAll("#tradeBody tr td:nth-child(11)");
     let highestValue = -Infinity;
     let highestCell = null;
 
@@ -99,13 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Apply the gold glow to the highest cell
     if (highestCell) {
         highestCell.classList.remove('positive-glow');
         highestCell.classList.add('glowing-gold');
     }
 
-    // Copy cell content on click
     const cells = document.querySelectorAll('td');
     cells.forEach(cell => {
         cell.style.position = 'relative';
@@ -144,16 +141,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Dark mode toggle when clicking on the caption
-    const caption = document.querySelector("caption"); // Assuming you have a caption element
+    const caption = document.querySelector("caption");
     if (caption) {
         caption.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
         });
     }
 
-    // Reverse table rows when clicking on "Trade" header
-    const tradeHeader = document.querySelector("th:nth-child(1)");  // Selecting the first <th> which is "Trade"
+    const tradeHeader = document.querySelector("th:nth-child(1)"); 
     if (tradeHeader) {
         tradeHeader.addEventListener('click', () => {
             const tradeBody = document.querySelector("#tradeBody");

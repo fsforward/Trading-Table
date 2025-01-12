@@ -153,6 +153,6 @@ body.dark-mode caption {
 }
 
 body.dark-mode .glowing-gold {
-    color: #ffd700; /* Ensure gold color in dark mode */
+    color: #ffd700;
     text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 0 15px #ffd700;
 }
