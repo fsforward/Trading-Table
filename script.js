@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     let cumulativeProfit = 0;
     let cumulativeLoss = 0;
+    let totalProfits = 0; // Variable to count the Profits
 
     const rows = document.querySelectorAll("#tradeBody tr");
     let tradeNumber = 1;
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pl > 0) {
             totalDayProfit += pl;
             cumulativeProfit += pl;
+            totalProfits++; // Increment Profits if profit is positive
         } else {
             totalDayLoss += pl;
             cumulativeLoss += pl;
@@ -103,6 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
         highestCell.classList.add('glowing-gold');
     }
 
+    // Calculate Profit Probability as a percentage
+    const profitProbability = (totalProfits / rows.length * 100).toFixed(2);
+
+    // Update the stats section for Profit Probability
+    const profitRateElement = document.getElementById('profitRate');
+    if (profitRateElement) {
+        profitRateElement.textContent = `Profit Rate: ${profitProbability}%`;
+    }
+
+    // Clipboard functionality
     const cells = document.querySelectorAll('td');
     cells.forEach(cell => {
         cell.style.position = 'relative';

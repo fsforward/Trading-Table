@@ -8,6 +8,20 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
+#statistics {
+    background-color: #ff99cc;
+    padding: 5px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+#statistics p {
+    margin: 0;
+}
+
 :root {
     --positive-color: #2c9248;
     --negative-color: #ff0000;
