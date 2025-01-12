@@ -11,6 +11,7 @@ body {
 :root {
     --positive-color: #2c9248;
     --negative-color: #ff0000;
+    --highest-profit: #dec017;
 }
 
 .positive {
@@ -37,12 +38,28 @@ body {
 }
 
 .positive-glow {
-    animation: glow-positive 0.4s infinite alternate;
+    animation: glow-positive 0.8s infinite alternate;
 }
 
 @keyframes glow-positive {
     0% {
         transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.glowing-gold {
+    color: var(--highest-profit);
+    font-weight: bold;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+    animation: glow-gold-pulse 0.2s infinite alternate;
+}
+
+@keyframes glow-gold-pulse {
+    0% {
+        transform: scale(1.05);
     }
     100% {
         transform: scale(1);
@@ -69,6 +86,10 @@ th {
     background-color: #ff99cc;
     color: white;
     font-size: 1.2em;
+}
+
+th:nth-child(1) {
+    cursor: pointer;
 }
 
 tr:nth-child(even) {
@@ -129,4 +150,9 @@ body.dark-mode .negative {
 body.dark-mode caption {
     color: #e91e63;
     text-shadow: 1px 1px 2px #d81b60;
+}
+
+body.dark-mode .glowing-gold {
+    color: #ffd700; /* Ensure gold color in dark mode */
+    text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 0 15px #ffd700;
 }

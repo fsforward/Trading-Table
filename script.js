@@ -1,9 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Toggle dark mode on caption click
-    document.querySelector("caption").addEventListener("click", function() {
-        document.body.classList.toggle("dark-mode");
-    });
-
     let cumulativeProfit = 0;
     let cumulativeLoss = 0;
 
@@ -91,6 +86,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Find the highest value in the Total column (last column)
+    const totalCells = document.querySelectorAll("#tradeBody tr td:nth-child(11)"); // Selecting the "Total" column
+    let highestValue = -Infinity;
+    let highestCell = null;
+
+    totalCells.forEach(cell => {
+        const cellValue = parseFloat(cell.textContent);
+        if (cellValue > highestValue) {
+            highestValue = cellValue;
+            highestCell = cell;
+        }
+    });
+
+    // Apply the gold glow to the highest cell
+    if (highestCell) {
+        highestCell.classList.remove('positive-glow');
+        highestCell.classList.add('glowing-gold');
+    }
+
     // Copy cell content on click
     const cells = document.querySelectorAll('td');
     cells.forEach(cell => {
@@ -129,4 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1000);
         });
     });
+
+    // Dark mode toggle when clicking on the caption
+    const caption = document.querySelector("caption"); // Assuming you have a caption element
+    if (caption) {
+        caption.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+        });
+    }
+
+    // Reverse table rows when clicking on "Trade" header
+    const tradeHeader = document.querySelector("th:nth-child(1)");  // Selecting the first <th> which is "Trade"
+    if (tradeHeader) {
+        tradeHeader.addEventListener('click', () => {
+            const tradeBody = document.querySelector("#tradeBody");
+            const rows = Array.from(tradeBody.querySelectorAll("tr"));
+            rows.reverse().forEach(row => tradeBody.appendChild(row));
+        });
+    }
 });
