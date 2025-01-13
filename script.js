@@ -1,40 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let cumulativeProfit = 0;
-    let cumulativeLoss = 0;
-    let totalProfits = 0; // Variable to count the Profits
-
+    let cumulativeProfit = 0, cumulativeLoss = 0, totalProfits = 0;
     const rows = document.querySelectorAll("#tradeBody tr");
-    let tradeNumber = 1;
-    let totalDayProfit = 0;
-    let totalDayLoss = 0;
-    let previousDay = '';
-    let cumulativeTotal = 0;
+    let tradeNumber = 1, totalDayProfit = 0, totalDayLoss = 0, previousDay = '', cumulativeTotal = 0;
 
     rows.forEach(row => {
         const cells = row.querySelectorAll('td');
         let [date, stock, moneyStart, pl] = [
-            cells[0].textContent,
-            cells[1].textContent,
-            parseFloat(cells[2].textContent),
-            parseFloat(cells[3].textContent)
+            cells[0].textContent, cells[1].textContent,
+            parseFloat(cells[2].textContent), parseFloat(cells[3].textContent)
         ];
 
-        if (previousDay !== date) {
-            totalDayProfit = 0;
-            totalDayLoss = 0;
-            previousDay = date;
-        }
+        if (previousDay !== date) { totalDayProfit = totalDayLoss = 0; previousDay = date; }
 
         const moneyEnd = moneyStart + pl;
-        if (pl > 0) {
-            totalDayProfit += pl;
-            cumulativeProfit += pl;
-            totalProfits++; // Increment Profits if profit is positive
-        } else {
-            totalDayLoss += pl;
-            cumulativeLoss += pl;
-        }
-
+        pl > 0 ? (totalDayProfit += pl, cumulativeProfit += pl, totalProfits++) : (totalDayLoss += pl, cumulativeLoss += pl);
         cumulativeTotal = cumulativeProfit + cumulativeLoss;
 
         const formattedTotalProfit = cumulativeProfit > 0 ? `+${cumulativeProfit.toFixed(2)}` : cumulativeProfit.toFixed(2);
@@ -55,43 +34,26 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${formattedTotalLoss}</td>
             <td>${formattedTotal}</td>
         `;
-
         row.replaceWith(newRow);
 
         const newCells = newRow.querySelectorAll('td');
         const lastCell = newCells[10];
 
-        if (lastCell.textContent.startsWith('+')) {
-            lastCell.classList.add('positive-glow');
-            lastCell.classList.remove('negative-pulse');
-        } else {
-            lastCell.classList.remove('positive-glow');
-            lastCell.classList.add('negative-pulse');
-        }
+        lastCell.classList.toggle('positive-glow', lastCell.textContent.startsWith('+'));
+        lastCell.classList.toggle('negative-pulse', lastCell.textContent.startsWith('-'));
 
         newCells.forEach(cell => {
-            if (cell.textContent.startsWith('+')) {
-                cell.classList.add('positive');
-                cell.classList.remove('negative');
-            } else if (cell.textContent.startsWith('-')) {
-                cell.classList.add('negative');
-                cell.classList.remove('positive');
-            }
+            cell.classList.toggle('positive', cell.textContent.startsWith('+'));
+            cell.classList.toggle('negative', cell.textContent.startsWith('-'));
         });
 
-        if (pl > 0) {
-            newCells[5].classList.add('positive');
-            newCells[5].classList.remove('negative');
-        } else if (pl < 0) {
-            newCells[5].classList.add('negative');
-            newCells[5].classList.remove('positive');
+        if (pl !== 0) {
+            newCells[5].classList.add(pl > 0 ? 'positive' : 'negative');
         }
     });
 
     const totalCells = document.querySelectorAll("#tradeBody tr td:nth-child(11)");
-    let highestValue = -Infinity;
-    let highestCell = null;
-
+    let highestValue = -Infinity, highestCell = null;
     totalCells.forEach(cell => {
         const cellValue = parseFloat(cell.textContent);
         if (cellValue > highestValue) {
@@ -99,30 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
             highestCell = cell;
         }
     });
+    if (highestCell) highestCell.classList.add('glowing-gold');
 
-    if (highestCell) {
-        highestCell.classList.remove('positive-glow');
-        highestCell.classList.add('glowing-gold');
-    }
-
-    // Calculate Profit Probability as a percentage
     const profitProbability = (totalProfits / rows.length * 100).toFixed(2);
-
-    // Update the stats section for Profit Probability
     const profitRateElement = document.getElementById('profitRate');
-    if (profitRateElement) {
-        profitRateElement.textContent = `Profit Rate: ${profitProbability}%`;
-    }
+    if (profitRateElement) profitRateElement.textContent = `Profit Rate: ${profitProbability}%`;
 
-    // Clipboard functionality
-    const cells = document.querySelectorAll('td');
-    cells.forEach(cell => {
+    document.querySelectorAll('td').forEach(cell => {
         cell.style.position = 'relative';
 
         cell.addEventListener('click', () => {
-            if (cell.textContent.trim() === '') return;
+            if (!cell.textContent.trim()) return;
 
-            navigator.clipboard.writeText(cell.textContent);
+            navigator.clipboard.writeText(cell.dataset.originalText || cell.textContent);
 
             const copiedText = document.createElement('span');
             copiedText.textContent = 'Copied!';
@@ -141,31 +92,32 @@ document.addEventListener('DOMContentLoaded', () => {
             copiedText.style.transition = 'opacity 0.5s ease-in-out';
 
             cell.appendChild(copiedText);
-
-            setTimeout(() => {
-                copiedText.style.opacity = '1';
-            }, 0);
-
-            setTimeout(() => {
-                copiedText.style.opacity = '0';
-                setTimeout(() => copiedText.remove(), 500);
-            }, 1000);
+            setTimeout(() => copiedText.style.opacity = '1', 0);
+            setTimeout(() => copiedText.style.opacity = '0', 1000);
+            setTimeout(() => copiedText.remove(), 1500);
         });
     });
 
-    const caption = document.querySelector("caption");
-    if (caption) {
-        caption.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
-    }
+    document.querySelector("caption")?.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
 
-    const tradeHeader = document.querySelector("th:nth-child(1)"); 
-    if (tradeHeader) {
-        tradeHeader.addEventListener('click', () => {
-            const tradeBody = document.querySelector("#tradeBody");
-            const rows = Array.from(tradeBody.querySelectorAll("tr"));
-            rows.reverse().forEach(row => tradeBody.appendChild(row));
+    document.querySelector("th:nth-child(1)")?.addEventListener('click', () => {
+        const tradeBody = document.querySelector("#tradeBody");
+        const rows = Array.from(tradeBody.querySelectorAll("tr"));
+        rows.reverse().forEach(row => tradeBody.appendChild(row));
+    });
+
+    document.querySelectorAll("#tradeBody tr td:nth-child(2)").forEach(dateCell => {
+        const originalDate = dateCell.textContent.trim();
+        dateCell.dataset.originalText = originalDate;
+
+        dateCell.addEventListener("mouseenter", () => {
+            dateCell.textContent = "(YYYY-MM-DD)";
         });
-    }
+
+        dateCell.addEventListener("mouseleave", () => {
+            dateCell.textContent = originalDate;
+        });
+    });
 });

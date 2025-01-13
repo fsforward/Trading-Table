@@ -114,6 +114,16 @@ tr:hover {
     background-color: rgba(255, 179, 217, 0.6);
 }
 
+#tradeBody tr td:nth-child(1) {
+    transition: color 0.3s ease;
+}
+
+#tradeBody tr td:nth-child(1):hover {
+    color: #d6006f; /* Girly pink hover color */
+    font-weight: bold;
+}
+
+
 caption {
     margin-bottom: 10px;
     font-size: 1.5em;
